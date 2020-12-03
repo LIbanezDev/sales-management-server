@@ -3,21 +3,26 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Connection } from 'typeorm';
 import { ProductsModule } from './products/products.module';
 import { UsersModule } from './users/users.module';
+import { GraphQLModule } from '@nestjs/graphql';
+import { AnimalsModule } from './animals/animals.module';
+import { DatabaseConfig } from './config/database.config';
+import { apolloConfig } from './config/apollo-server.config';
+import { ConfigModule } from '@nestjs/config';
+import { config } from './config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      load: [config],
+    }),
     ProductsModule,
     UsersModule,
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'postgres',
-      password: '123456',
-      database: 'nest_rest',
-      synchronize: true,
-      autoLoadEntities: true,
-      logging: true,
+    AnimalsModule,
+    GraphQLModule.forRoot(apolloConfig),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      useClass: DatabaseConfig,
     }),
   ],
 })

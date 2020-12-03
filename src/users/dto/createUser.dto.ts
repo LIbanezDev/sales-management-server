@@ -1,4 +1,4 @@
-export interface CreateUserDto {
+export class CreateUserDto {
   name: string;
   age: number;
 }

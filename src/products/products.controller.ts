@@ -1,22 +1,23 @@
-import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, ParseIntPipe, Post, Put, Query } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/createProduct.dto';
-import { Product } from './entity/product.entity';
-import { isNumeric } from 'rxjs/internal-compatibility';
+import { Product } from '../db/models/product.entity';
+import { UsersService } from '../users/users.service';
 
 @Controller('products')
 export class ProductsController {
-  constructor(private readonly productsService: ProductsService) {}
+  constructor(private readonly productsService: ProductsService, private readonly usersService: UsersService) {}
 
   @Get()
-  async getAll(): Promise<Product[]> {
-    return await this.productsService.getAll();
+  async getAll(@Query('limit', ParseIntPipe) limit: number): Promise<Product[]> {
+    return await this.productsService.productsRepo.find({
+      take: limit || 10,
+    });
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string) {
-    if (!isNumeric(id)) throw new HttpException('Parametro id debe ser un numero.', HttpStatus.BAD_REQUEST);
-    const product = await this.productsService.getOne(parseInt(id));
+  async findOne(@Param('id', ParseIntPipe) id: number) {
+    const product = await this.productsService.productsRepo.findOne(id);
     if (!product) throw new HttpException('Producto no existe', HttpStatus.NOT_FOUND);
     return product;
   }
@@ -26,24 +27,27 @@ export class ProductsController {
     if (!createProductDto.name || !createProductDto.ownerId || !createProductDto.stock) {
       throw new HttpException('Bad fucking request bro!!!!', HttpStatus.BAD_REQUEST);
     }
-    const res = await this.productsService.addProduct(createProductDto);
-    if (!res) {
+    const user = await this.usersService.usersRepository.findOne(createProductDto.ownerId);
+    if (!user) {
       throw new HttpException('No se pudo crear el producto, el usuario no existe.', HttpStatus.BAD_REQUEST);
     }
-    return res;
+    return await this.productsService.productsRepo.create({
+      ...createProductDto,
+      user,
+    });
   }
 
   @Delete(':id')
-  async deleteOne(@Param('id') id: string) {
-    if (!isNumeric(id)) throw new HttpException('Parametro id debe ser un numero.', HttpStatus.BAD_REQUEST);
-    const product = await this.productsService.deleteOne(parseInt(id));
+  async deleteOne(@Param('id', ParseIntPipe) id: number) {
+    const product = await this.productsService.productsRepo.delete({
+      id,
+    });
     if (!product) throw new HttpException('Producto no existe', HttpStatus.NOT_FOUND);
-    return product;
+    return true;
   }
 
   @Put(':id')
-  async editOne(@Param('id') id: string) {
-    if (!isNumeric(id)) throw new HttpException('Parametro id debe ser un numero.', HttpStatus.BAD_REQUEST);
-
+  async editOne(@Param('id', ParseIntPipe) id: number) {
+    return true;
   }
 }
