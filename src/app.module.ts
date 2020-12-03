@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Connection } from 'typeorm';
-import { ProductsModule } from './products/products.module';
-import { UsersModule } from './users/users.module';
+import { ProductsModule } from './modules/products/products.module';
+import { UsersModule } from './modules/users/users.module';
 import { GraphQLModule } from '@nestjs/graphql';
-import { AnimalsModule } from './animals/animals.module';
+import { AnimalsModule } from './modules/animals/animals.module';
 import { DatabaseConfig } from './config/database.config';
 import { apolloConfig } from './config/apollo-server.config';
 import { ConfigModule } from '@nestjs/config';

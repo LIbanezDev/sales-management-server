@@ -1,6 +1,6 @@
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { AnimalsService } from './animals.service';
-import { Animal } from '../db/models/animal.entity';
+import { Animal } from '../../db/models/animal.entity';
 import { CreateAnimalInput } from './dto/create-animal.input';
 import { UpdateAnimalInput } from './dto/update-animal.input';
 import { UsersService } from '../users/users.service';
