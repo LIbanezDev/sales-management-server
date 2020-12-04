@@ -3,7 +3,7 @@ import { ProductsService } from './products.service';
 
 @Resolver()
 export class ProductsResolver {
-  constructor(private readonly productsServic: ProductsService) {}
+  constructor(private readonly productsService: ProductsService) {}
 
   @Query(() => String)
   hello(): string {
