@@ -4,7 +4,7 @@ import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-describe('ProductController (e2e)', () => {
+describe('End to End Test (e2e)', () => {
   let app: INestApplication;
 
   beforeAll(async () => {
@@ -28,9 +28,11 @@ describe('ProductController (e2e)', () => {
   });
 
   describe('UsersModule', () => {
+    const httpServer = app.getHttpServer();
     it('/', async () => {
-      const res = await request(app.getHttpServer()).get('/users').expect(200);
+      const res = await request(httpServer).get('/users').expect(200);
       const users = res.body;
+      console.log(users);
       expect(users).toHaveLength(3);
     });
   });
