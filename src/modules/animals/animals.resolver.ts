@@ -1,17 +1,19 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Args, Int, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql';
 import { AnimalsService } from './animals.service';
 import { Animal } from '../../db/models/animal.entity';
 import { CreateAnimalInput } from './dto/create-animal.input';
 import { UpdateAnimalInput } from './dto/update-animal.input';
-import { UsersService } from '../users/users.service';
+import { PubSub } from 'apollo-server-express';
+
+const pubSub = new PubSub();
 
 @Resolver(() => Animal)
 export class AnimalsResolver {
-  constructor(private readonly animalsService: AnimalsService, private readonly usersService: UsersService) {}
+  constructor(private readonly animalsService: AnimalsService) {}
 
   @Mutation(() => Animal, { nullable: true })
   async createAnimal(@Args('createAnimalInput') createAnimalInput: CreateAnimalInput) {
-    const owner = await this.usersService.usersRepository.findOne(createAnimalInput.ownerId);
+    const owner = await this.animalsService.usersRepo.findOne(createAnimalInput.ownerId);
     if (!owner) return null;
     const newAnimal = {
       ...createAnimalInput,
@@ -22,10 +24,12 @@ export class AnimalsResolver {
   }
 
   @Query(() => [Animal], { name: 'animals' })
-  findAll() {
-    return this.animalsService.animalRepo.find({
+  async findAll() {
+    const animals = await this.animalsService.animalRepo.find({
       relations: ['owner'],
     });
+    await pubSub.publish('animals', animals);
+    return animals;
   }
 
   @Query(() => Animal, { name: 'animal' })
@@ -43,5 +47,14 @@ export class AnimalsResolver {
     return this.animalsService.animalRepo.delete({
       id,
     });
+  }
+
+  @Subscription(() => [Animal], {
+    resolve: payload => {
+      return payload;
+    },
+  })
+  animalAdded() {
+    return pubSub.asyncIterator('animals');
   }
 }

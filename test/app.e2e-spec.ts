@@ -2,20 +2,36 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 describe('ProductController (e2e)', () => {
   let app: INestApplication;
 
-  beforeEach(async () => {
-    const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [AppModule],
+  beforeAll(async () => {
+    const module: TestingModule = await Test.createTestingModule({
+      imports: [
+        AppModule,
+        TypeOrmModule.forRoot({
+          type: 'postgres',
+          url: 'postgres://postgres:123456@localhost:5432/nest_rest_test',
+          entities: ['./!**!/!*.entity.ts'],
+          synchronize: true,
+        }),
+      ],
     }).compile();
-
-    app = moduleFixture.createNestApplication();
+    app = module.createNestApplication();
     await app.init();
   });
 
-  it('/ (GET)', () => {
-    return request(app.getHttpServer()).get('/').expect(200).expect('Hello World!');
+  afterAll(async () => {
+    await app.close();
+  });
+
+  describe('UsersModule', () => {
+    it('/', async () => {
+      const res = await request(app.getHttpServer()).get('/users').expect(200);
+      const users = res.body;
+      expect(users).toHaveLength(3);
+    });
   });
 });

@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ProductsController } from './products.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ProductsModule } from './products.module';
 import { INestApplication } from '@nestjs/common';
+import { ProductsModule } from './products.module';
 
 describe('ProductController', () => {
   let productController: ProductsController;
@@ -19,9 +19,8 @@ describe('ProductController', () => {
           username: 'postgres',
           password: '123456',
           database: 'nest_rest_test',
-          dropSchema: true,
+          entities: ['./**/*.entity.ts'],
           synchronize: true,
-          autoLoadEntities: true,
         }),
       ],
     }).compile();
@@ -35,9 +34,8 @@ describe('ProductController', () => {
   });
 
   describe('root', () => {
-    it('should return an array of products', async () => {
-      const res = await productController.getAll();
-      expect(res).toHaveLength(0);
+    it('should return an array of products', () => {
+      expect(productController.getAll(0)).resolves.toHaveLength(0);
     });
   });
 });

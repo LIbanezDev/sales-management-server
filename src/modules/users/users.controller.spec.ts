@@ -19,9 +19,8 @@ describe('UserController', () => {
           username: 'postgres',
           password: '123456',
           database: 'nest_rest_test',
-          dropSchema: true,
           synchronize: true,
-          autoLoadEntities: true,
+          entities: ['./**/*.entity.ts'],
         }),
       ],
     }).compile();
@@ -35,8 +34,6 @@ describe('UserController', () => {
   });
 
   it('should be defined', async () => {
-    const users = await controller.getUsers();
-    console.log(users);
-    expect(users).toHaveLength(0);
+    expect(controller).toBeDefined();
   });
 });

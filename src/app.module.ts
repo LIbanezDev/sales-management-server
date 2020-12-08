@@ -8,18 +8,18 @@ import { AnimalsModule } from './modules/animals/animals.module';
 import { DatabaseConfig } from './config/database.config';
 import { apolloConfig } from './config/apollo-server.config';
 import { ConfigModule } from '@nestjs/config';
-import { config } from './config';
+import { globalConfig } from './config/global.config';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({
-      isGlobal: true,
-      load: [config],
-    }),
     ProductsModule,
     UsersModule,
     AnimalsModule,
     GraphQLModule.forRoot(apolloConfig),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      load: [globalConfig],
+    }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       useClass: DatabaseConfig,
