@@ -27,13 +27,12 @@ describe('End to End Test (e2e)', () => {
     await app.close();
   });
 
-  describe('UsersModule', () => {
-    const httpServer = app.getHttpServer();
+  describe('[AuthModule]', () => {
     it('/', async () => {
-      const res = await request(httpServer).get('/users').expect(200);
+      const res = await request(app.getHttpServer()).get('/users').expect(200);
       const users = res.body;
       console.log(users);
-      expect(users).toHaveLength(3);
+      expect(users).toHaveLength(0);
     });
   });
 });

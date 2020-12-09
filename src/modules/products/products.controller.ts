@@ -4,25 +4,34 @@ import { CreateProductDto } from './dto/createProduct.dto';
 import { Product } from '../../db/models/product.entity';
 import { UsersService } from '../users/users.service';
 
-@Controller('products')
+@Controller()
 export class ProductsController {
   constructor(private readonly productsService: ProductsService, private readonly usersService: UsersService) {}
 
-  @Get()
+  @Get('/')
+  async indexRoute() {
+    const url = this.productsService.configService.get('url');
+    return {
+      swagger: url + '/api',
+      graphql: url + '/graphql',
+    };
+  }
+
+  @Get('/products')
   async getAll(@Query('limit', ParseIntPipe) limit: number): Promise<Product[]> {
     return await this.productsService.productsRepo.find({
       take: limit || 10,
     });
   }
 
-  @Get(':id')
+  @Get('/products/:id')
   async findOne(@Param('id', ParseIntPipe) id: number) {
     const product = await this.productsService.productsRepo.findOne(id);
     if (!product) throw new HttpException('Producto no existe', HttpStatus.NOT_FOUND);
     return product;
   }
 
-  @Post()
+  @Post('/products')
   async createOne(@Body() createProductDto: CreateProductDto): Promise<Product> {
     if (!createProductDto.name || !createProductDto.ownerId || !createProductDto.stock) {
       throw new HttpException('Bad fucking request bro!!!!', HttpStatus.BAD_REQUEST);
@@ -37,7 +46,7 @@ export class ProductsController {
     });
   }
 
-  @Delete(':id')
+  @Delete('/products/:id')
   async deleteOne(@Param('id', ParseIntPipe) id: number) {
     const product = await this.productsService.productsRepo.delete({
       id,
@@ -46,7 +55,7 @@ export class ProductsController {
     return true;
   }
 
-  @Put(':id')
+  @Put('/products/:id')
   async editOne(@Param('id', ParseIntPipe) id: number) {
     return true;
   }

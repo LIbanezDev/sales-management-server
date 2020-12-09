@@ -1,0 +1,106 @@
+# This file was generated based on ".graphqlconfig". Do not edit manually.
+
+schema {
+    query: Query
+    mutation: Mutation
+    subscription: Subscription
+}
+
+interface IMutationResponse {
+    errors: [MutationError!]
+    msg: String
+    ok: Boolean!
+}
+
+type Animal {
+    id: ID!
+    name: String!
+    owner: User!
+    type: ANIMAL_TYPE!
+}
+
+type Mutation {
+    createAnimal(createAnimalInput: CreateAnimalInput!): Animal
+    register(data: UserRegisterInput!): UserResponse!
+    removeAnimal(id: Int!): Animal!
+    updateAnimal(updateAnimalInput: UpdateAnimalInput!): Animal!
+}
+
+type MutationError {
+    msg: String!
+    path: String!
+}
+
+type Product {
+    id: ID!
+    name: String!
+    stock: Float!
+    user: User!
+}
+
+type Query {
+    animal(id: Int!): Animal!
+    animals: [Animal!]!
+    hello: String!
+}
+
+type Subscription {
+    animalAdded: [Animal!]!
+}
+
+"Registered users"
+type User {
+    age: Float!
+    animals: [Animal!]!
+    description: String!
+    email: String!
+    github: Boolean!
+    google: Boolean!
+    id: ID!
+    image: String
+    name: String!
+    products: [Product!]!
+}
+
+type UserResponse implements IMutationResponse {
+    errors: [MutationError!]
+    msg: String
+    ok: Boolean!
+    user: User
+}
+
+enum ANIMAL_TYPE {
+    CAT
+    DOG
+    PLATYPUS
+}
+
+input CreateAnimalInput {
+    name: String!
+    ownerId: Int!
+    type: ANIMAL_TYPE!
+}
+
+input UpdateAnimalInput {
+    id: Int!
+    name: String
+    ownerId: Int
+    type: ANIMAL_TYPE
+}
+
+"Informacion necesaria para crear nuevos usuarios"
+input UserRegisterInput {
+    bornDate: DateTime!
+    description: String
+    email: String!
+    image: Upload
+    name: String!
+    password: String
+}
+
+
+"A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format."
+scalar DateTime
+
+"The `Upload` scalar type represents a file upload."
+scalar Upload

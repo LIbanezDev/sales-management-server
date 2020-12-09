@@ -9,12 +9,14 @@ import { DatabaseConfig } from './config/database.config';
 import { apolloConfig } from './config/apollo-server.config';
 import { ConfigModule } from '@nestjs/config';
 import { globalConfig } from './config/global.config';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
     ProductsModule,
     UsersModule,
     AnimalsModule,
+    AuthModule,
     GraphQLModule.forRoot(apolloConfig),
     ConfigModule.forRoot({
       isGlobal: true,
