@@ -1,6 +1,5 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Field, ID, ObjectType } from '@nestjs/graphql';
-import { OneToMany } from 'typeorm/index';
 import { Product } from './product.entity';
 import { Animal } from './animal.entity';
 
@@ -42,15 +41,8 @@ export class User extends BaseEntity {
   @Column({ length: 150, unique: true, nullable: false })
   email!: string;
 
-  @Column({ length: 100, nullable: false })
+  @Column()
   password!: string;
-
-  @Column({ length: 30, nullable: false })
-  salt!: string;
-
-  @Field(() => String, { nullable: true })
-  @Column({ length: 180, nullable: true, type: 'varchar' })
-  image?: string | null;
 
   @Field(() => [Product])
   @OneToMany(() => Product, p => p.user)

@@ -1,4 +1,4 @@
-import { Resolver, Query } from '@nestjs/graphql';
+import { Query, Resolver } from '@nestjs/graphql';
 import { ProductsService } from './products.service';
 import { UsersService } from '../users/users.service';
 
@@ -8,7 +8,7 @@ export class ProductsResolver {
 
   @Query(() => String)
   async hello(): Promise<string> {
-    console.log(await this.usersService.usersRepository.find());
+    console.log(await this.usersService.usersRepo.find());
     return 'Hello';
   }
 }

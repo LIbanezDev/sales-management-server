@@ -14,7 +14,7 @@ export class UsersController {
   @ApiResponse({ status: 200, description: 'Success.' })
   @Get()
   async getUsers() {
-    return await this.usersService.usersRepository.find({
+    return await this.usersService.usersRepo.find({
       relations: ['animals', 'products'],
     });
   }
@@ -23,7 +23,7 @@ export class UsersController {
   @ApiResponse({ status: 201, description: 'Crear un nuevo usuario', type: User })
   @ApiBody({ description: 'Informacion necesaria para crear un nuevo usuario', required: true, type: CreateUserDto })
   async createUser(@Body() createUserDto: CreateUserDto): Promise<{ user: User }> {
-    const user = await this.usersService.usersRepository.create(createUserDto);
+    const user = await this.usersService.usersRepo.create(createUserDto);
     return {
       user,
     };

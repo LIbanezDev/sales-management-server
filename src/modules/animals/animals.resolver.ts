@@ -12,11 +12,11 @@ export class AnimalsResolver {
   constructor(private readonly animalsService: AnimalsService) {}
 
   @Mutation(() => Animal, { nullable: true })
-  async createAnimal(@Args('createAnimalInput') createAnimalInput: CreateAnimalInput) {
-    const owner = await this.animalsService.usersRepo.findOne(createAnimalInput.ownerId);
+  async createAnimal(@Args() createAnimal: CreateAnimalInput) {
+    const owner = await this.animalsService.usersRepo.findOne(createAnimal.ownerId);
     if (!owner) return null;
     const newAnimal = {
-      ...createAnimalInput,
+      ...createAnimal,
       owner,
     };
     await this.animalsService.animalRepo.insert(newAnimal);

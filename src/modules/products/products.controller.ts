@@ -36,7 +36,7 @@ export class ProductsController {
     if (!createProductDto.name || !createProductDto.ownerId || !createProductDto.stock) {
       throw new HttpException('Bad fucking request bro!!!!', HttpStatus.BAD_REQUEST);
     }
-    const user = await this.usersService.usersRepository.findOne(createProductDto.ownerId);
+    const user = await this.usersService.usersRepo.findOne(createProductDto.ownerId);
     if (!user) {
       throw new HttpException('No se pudo crear el producto, el usuario no existe.', HttpStatus.BAD_REQUEST);
     }

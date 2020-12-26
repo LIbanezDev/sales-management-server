@@ -31,7 +31,6 @@ describe('End to End Test (e2e)', () => {
     it('/', async () => {
       const res = await request(app.getHttpServer()).get('/users').expect(200);
       const users = res.body;
-      console.log(users);
       expect(users).toHaveLength(0);
     });
   });

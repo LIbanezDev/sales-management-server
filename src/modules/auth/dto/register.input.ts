@@ -1,6 +1,4 @@
-import { GraphQLUpload } from 'apollo-server-express';
-import { Upload } from '../../../utils/types/graphql';
-import { Field, InputType, registerEnumType } from '@nestjs/graphql';
+import { ArgsType, Field, InputType, registerEnumType } from '@nestjs/graphql';
 import { IsEmail } from 'class-validator';
 
 export enum AUTH_APPS {
@@ -13,8 +11,8 @@ registerEnumType(AUTH_APPS, {
   description: 'External auth apps like GitHub or Google', // this one is optional
 });
 
-@InputType({ description: 'Informacion necesaria para crear nuevos usuarios' })
-export class UserRegisterInput {
+@ArgsType()
+export class RegisterArgs {
   @Field({ nullable: false })
   @IsEmail()
   email: string;
@@ -30,9 +28,6 @@ export class UserRegisterInput {
 
   @Field({ nullable: false })
   bornDate: Date;
-
-  @Field(() => GraphQLUpload || Boolean, { nullable: true })
-  image?: Upload;
 }
 
 @InputType({
