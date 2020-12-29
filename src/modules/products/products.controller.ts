@@ -1,12 +1,29 @@
-import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, ParseIntPipe, Post, Put, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpException,
+  HttpStatus,
+  Param,
+  ParseIntPipe,
+  Post,
+  Put,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/createProduct.dto';
 import { Product } from '../../db/models/product.entity';
-import { UsersService } from '../users/users.service';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { JwtAuth } from '../auth/guards/jwt-auth.guard';
+import { CurrentUser } from '../auth/decorators/current-user.decorators';
+import { AuthUser } from '../../utils/types/graphql';
 
+@ApiTags('Products')
 @Controller()
 export class ProductsController {
-  constructor(private readonly productsService: ProductsService, private readonly usersService: UsersService) {}
+  constructor(private readonly productsService: ProductsService) {}
 
   @Get('/')
   async indexRoute() {
@@ -31,22 +48,24 @@ export class ProductsController {
     return product;
   }
 
+  @UseGuards(JwtAuth)
   @Post('/products')
-  async createOne(@Body() createProductDto: CreateProductDto): Promise<Product> {
-    if (!createProductDto.name || !createProductDto.ownerId || !createProductDto.stock) {
-      throw new HttpException('Bad fucking request bro!!!!', HttpStatus.BAD_REQUEST);
+  @ApiBearerAuth('BearerJWT')
+  async createOne(@Body() createProductDto: CreateProductDto, @CurrentUser() user: AuthUser): Promise<Product> {
+    if (!createProductDto.name || !createProductDto.stock) {
+      throw new HttpException('Bad fucking request bro!', HttpStatus.BAD_REQUEST);
     }
-    const user = await this.usersService.usersRepo.findOne(createProductDto.ownerId);
-    if (!user) {
-      throw new HttpException('No se pudo crear el producto, el usuario no existe.', HttpStatus.BAD_REQUEST);
-    }
-    return await this.productsService.productsRepo.create({
-      ...createProductDto,
-      user,
-    });
+    return this.productsService.productsRepo
+      .create({
+        ...createProductDto,
+        user: await this.productsService.usersRepo.findOne(user.id),
+      })
+      .save();
   }
 
+  @UseGuards(JwtAuth)
   @Delete('/products/:id')
+  @ApiBearerAuth('BearerJWT')
   async deleteOne(@Param('id', ParseIntPipe) id: number) {
     const product = await this.productsService.productsRepo.delete({
       id,
@@ -55,7 +74,9 @@ export class ProductsController {
     return true;
   }
 
+  @UseGuards(JwtAuth)
   @Put('/products/:id')
+  @ApiBearerAuth('BearerJWT')
   async editOne(@Param('id', ParseIntPipe) id: number) {
     return true;
   }

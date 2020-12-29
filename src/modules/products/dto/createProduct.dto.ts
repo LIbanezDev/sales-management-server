@@ -10,9 +10,4 @@ export class CreateProductDto {
     description: 'Stock actual',
   })
   stock: number;
-
-  @ApiProperty({
-    description: 'Id del dueño, (debe existir)',
-  })
-  ownerId: number;
 }

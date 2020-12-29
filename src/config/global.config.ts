@@ -17,5 +17,6 @@ export const globalConfig = (): GlobalConfig => ({
     logging: false,
     synchronize: true,
     autoLoadEntities: true,
+    dropSchema: true,
   },
 });

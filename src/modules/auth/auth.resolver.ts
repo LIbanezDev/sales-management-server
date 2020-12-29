@@ -1,26 +1,30 @@
-import { Args, GqlExecutionContext, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Query, ResolveField, Resolver, Root } from '@nestjs/graphql';
 import { RegisterArgs } from './dto/register.input';
-import { createParamDecorator, ExecutionContext, HttpException, HttpStatus, UseGuards } from '@nestjs/common';
+import { HttpException, HttpStatus, UseGuards } from '@nestjs/common';
 import { User } from '../../db/models/user.entity';
 import { AuthService } from './auth.service';
 import { LoginResponse } from './types/auth.types';
 import { AuthUser } from '../../utils/types/graphql';
-import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { JwtAuthGraphQL } from './guards/jwt-auth.guard';
+import { CurrentUserGQL } from './decorators/current-user.decorators';
 
-export const CurrentUser = createParamDecorator((data: unknown, context: ExecutionContext) => {
-  const ctx = GqlExecutionContext.create(context);
-  return ctx.getContext().req.user;
-});
-
-@Resolver()
+@Resolver(() => User)
 export class AuthResolver {
   constructor(private readonly authService: AuthService) {}
 
-  @UseGuards(JwtAuthGuard)
-  @Query(() => String)
-  async me(@CurrentUser() user: AuthUser) {
-    console.log(user);
-    return user.email;
+  @ResolveField()
+  age(@Root() user: User) {
+    let diff = (Date.now() - user.bornDate.getTime()) / 1000;
+    diff /= 60 * 60 * 24;
+    return Math.abs(Math.trunc(diff / 365.25));
+  }
+
+  @UseGuards(JwtAuthGraphQL)
+  @Query(() => User)
+  async me(@CurrentUserGQL() user: AuthUser) {
+    return this.authService.User.findOne(user.id, {
+      relations: ['products', 'animals'],
+    });
   }
 
   @Mutation(() => User)
@@ -30,7 +34,7 @@ export class AuthResolver {
     });
     if (userRegistered) throw new HttpException('Usuario ya registrado.', HttpStatus.BAD_REQUEST);
     const password = await this.authService.getEncryptedCredentials(data.password);
-    return await this.authService.User.create({
+    return this.authService.User.create({
       ...data,
       description: data.description || '',
       password,
@@ -39,10 +43,11 @@ export class AuthResolver {
 
   @Mutation(() => LoginResponse)
   async login(@Args('email') email: string, @Args('password') password: string): Promise<LoginResponse> {
-    // const user = await this.authService.validateUser({ email, password });
+    const user = await this.authService.validateUser({ email, password });
+    const roles = user.email === 'lucas.vergara@usm.cl' ? ['ADMIN'] : ['USER'];
     return {
-      token: this.authService.getToken({ id: 2, email: 'lucas.vergara@usm.cl', roles: ['ADMIN'] }),
-      user: new User(),
+      token: this.authService.getToken({ id: user.id, email: user.email, roles }),
+      user,
     };
   }
 }

@@ -1,31 +1,21 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Controller, Get, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { CreateUserDto } from './dto/createUser.dto';
-import { User } from '../../db/models/user.entity';
-import { ApiBearerAuth, ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { JwtAuth } from '../auth/guards/jwt-auth.guard';
 
-@ApiBearerAuth()
 @ApiTags('Users')
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
+  @UseGuards(JwtAuth)
   @ApiOperation({ summary: 'Get all users' })
   @ApiResponse({ status: 200, description: 'Success.' })
   @Get()
+  @ApiBearerAuth('BearerJWT')
   async getUsers() {
     return await this.usersService.usersRepo.find({
       relations: ['animals', 'products'],
     });
-  }
-
-  @Post()
-  @ApiResponse({ status: 201, description: 'Crear un nuevo usuario', type: User })
-  @ApiBody({ description: 'Informacion necesaria para crear un nuevo usuario', required: true, type: CreateUserDto })
-  async createUser(@Body() createUserDto: CreateUserDto): Promise<{ user: User }> {
-    const user = await this.usersService.usersRepo.create(createUserDto);
-    return {
-      user,
-    };
   }
 }

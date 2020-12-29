@@ -40,7 +40,7 @@ export class AuthService {
     if (!this.configService.get('GOOGLE_PASS') || !this.configService.get('GITHUB_PASS')) {
       throw new Error('Variables de entorno google pass y github pass no definidas...');
     }
-    let finalPass = '';
+    let finalPass = password;
     if (github) finalPass = process.env.GITHUB_PASS;
     else if (google) finalPass = process.env.GOOGLE_PASS;
     else finalPass = await bcrypt.hash(finalPass, 10);

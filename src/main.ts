@@ -10,10 +10,11 @@ async function bootstrap() {
   });
   app.useGlobalPipes(new ValidationPipe());
   const options = new DocumentBuilder()
-    .setTitle('Rest API Example...')
-    .setDescription('My first time with NestJS')
+    .setTitle('Rest CRUD and JWT Auth...')
+    .setDescription('Rest and GraphQL Services can work together!')
     .setVersion('1.0')
-    .addTag('first_time')
+    .setLicense('MIT', 'https://opensource.org/licenses/MIT')
+    .addBearerAuth({ type: 'http', scheme: 'bearer', bearerFormat: 'JWT' }, 'BearerJWT')
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api', app, document);
