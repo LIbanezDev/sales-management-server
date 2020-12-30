@@ -16,7 +16,6 @@ export const apolloConfig: GqlModuleOptions = {
     settings: { 'editor.fontSize': 22 },
   },
   formatError: (error: GraphQLError) => {
-    console.log(error);
     const formatedError: { message: string; statusCode: number } = {
       message: getErrorsAsString(error.extensions?.exception?.response?.message || error.message),
       statusCode: error.extensions?.exception?.response?.statusCode || error.extensions?.exception?.status || 500,
