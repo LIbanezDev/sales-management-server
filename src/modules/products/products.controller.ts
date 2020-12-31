@@ -25,15 +25,6 @@ import { AuthUser } from '../../utils/types/graphql';
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
-  @Get('/')
-  async indexRoute() {
-    const url = this.productsService.configService.get('url');
-    return {
-      swagger: url + '/api',
-      graphql: url + '/graphql',
-    };
-  }
-
   @Get('/products')
   async getAll(@Query('limit', ParseIntPipe) limit: number): Promise<Product[]> {
     return await this.productsService.productsRepo.find({
