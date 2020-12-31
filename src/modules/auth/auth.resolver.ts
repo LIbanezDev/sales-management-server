@@ -34,6 +34,7 @@ export class AuthResolver {
     });
     if (userRegistered) throw new HttpException('Usuario ya registrado.', HttpStatus.BAD_REQUEST);
     const password = await this.authService.getEncryptedCredentials(data.password);
+    await this.authService.sendWelcomeEmail(data.email);
     return this.authService.User.create({
       ...data,
       description: data.description || '',

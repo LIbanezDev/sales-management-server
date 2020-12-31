@@ -16,8 +16,8 @@ import * as Redis from 'ioredis';
       provide: 'PUB_SUB',
       useFactory: () =>
         new RedisPubSub({
-          publisher: new Redis(process.env.REDIS_URI || 'redis://localhost:6379'),
-          subscriber: new Redis(process.env.REDIS_URI || 'redis://localhost:6379'),
+          publisher: new Redis(process.env.REDIS_URI || 'redis://redis:6379'),
+          subscriber: new Redis(process.env.REDIS_URI || 'redis://redis:6379'),
         }),
     },
   ],

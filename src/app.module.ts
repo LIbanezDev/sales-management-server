@@ -9,7 +9,6 @@ import { DatabaseConfig } from './config/services.config';
 import { apolloConfig } from './config/apollo-server.config';
 import { globalConfig } from './config/global.config';
 import { AnimalsModule, AuthModule, HealthModule, ProductsModule, UsersModule } from './modules';
-import { MicroModule } from './modules/micro/micro.module';
 
 @Module({
   imports: [
@@ -18,11 +17,10 @@ import { MicroModule } from './modules/micro/micro.module';
     UsersModule,
     AnimalsModule,
     AuthModule,
-    MicroModule,
     GraphQLModule.forRoot(apolloConfig),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'documentation'),
-      exclude: ['/api*', '/graphql'],
+      exclude: ['/api*', '/graphql*'],
     }),
     ConfigModule.forRoot({
       isGlobal: true,

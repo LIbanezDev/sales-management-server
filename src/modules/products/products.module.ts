@@ -11,7 +11,7 @@ import * as redisStore from 'cache-manager-redis-store';
     TypeOrmModule.forFeature([Product, User]),
     CacheModule.register({
       store: redisStore,
-      url: process.env.REDIS_URI || 'redis://localhost:6379',
+      url: process.env.REDIS_URI || 'redis://redis:6379',
     }),
   ],
   providers: [ProductsService],

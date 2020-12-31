@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -6,6 +6,7 @@ import { User } from '../../db/models/user.entity';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { AuthUser } from '../../utils/types/graphql';
+import { ClientProxy } from '@nestjs/microservices';
 
 interface IVerifyPassword {
   inputPassword: string;
@@ -15,12 +16,20 @@ interface IVerifyPassword {
 @Injectable()
 export class AuthService {
   constructor(
-    public readonly configService: ConfigService,
-    @InjectRepository(User)
-    public readonly User: Repository<User>,
+    @Inject('MESSAGE_BROKER') private client: ClientProxy,
+    @InjectRepository(User) public readonly User: Repository<User>,
     private readonly jwtService: JwtService,
+    public readonly configService: ConfigService,
   ) {}
 
+  async sendWelcomeEmail(email: string): Promise<boolean> {
+    try {
+      await this.client.emit('NEW_USER', email);
+      return true;
+    } catch (e: unknown) {
+      return false;
+    }
+  }
   public async validateUser({ email, password }: { email: string; password: string }): Promise<User | null> {
     const userDB = await this.User.findOne({
       where: {
