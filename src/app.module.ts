@@ -1,23 +1,26 @@
+import { join } from 'path';
 import { Module } from '@nestjs/common';
+import { ServeStaticModule } from '@nestjs/serve-static';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Connection } from 'typeorm';
-import { ProductsModule } from './modules/products/products.module';
-import { UsersModule } from './modules/users/users.module';
 import { GraphQLModule } from '@nestjs/graphql';
-import { AnimalsModule } from './modules/animals/animals.module';
+import { ConfigModule } from '@nestjs/config';
+import { Connection } from 'typeorm';
 import { DatabaseConfig } from './config/services.config';
 import { apolloConfig } from './config/apollo-server.config';
-import { ConfigModule } from '@nestjs/config';
 import { globalConfig } from './config/global.config';
-import { AuthModule } from './modules/auth/auth.module';
+import { AnimalsModule, AuthModule, ProductsModule, UsersModule, HealthModule } from './modules';
 
 @Module({
   imports: [
     ProductsModule,
+    HealthModule,
     UsersModule,
     AnimalsModule,
     AuthModule,
     GraphQLModule.forRoot(apolloConfig),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'documentation'),
+    }),
     ConfigModule.forRoot({
       isGlobal: true,
       load: [globalConfig],
