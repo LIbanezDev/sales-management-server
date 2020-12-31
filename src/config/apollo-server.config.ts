@@ -8,7 +8,6 @@ const getErrorsAsString = (data: string | string[]) => {
   return data;
 };
 
-
 export const apolloConfig: GqlModuleOptions = {
   autoSchemaFile: true,
   introspection: true,
