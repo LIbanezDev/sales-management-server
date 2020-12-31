@@ -72,9 +72,6 @@
                         <li>
                             <a href="#globalConfig" title="src/config/global.config.ts"><b>globalConfig</b>&nbsp;&nbsp;&nbsp;(src/.../global.config.ts)</a>
                         </li>
-                        <li>
-                            <a href="#pubSub" title="src/modules/animals/animals.resolver.ts"><b>pubSub</b>&nbsp;&nbsp;&nbsp;(src/.../animals.resolver.ts)</a>
-                        </li>
                     </ul>
                 </td>
             </tr>
@@ -222,6 +219,7 @@
   url: process.env.NODE_ENV &#x3D;&#x3D;&#x3D; &#x27;production&#x27; ? &#x27;https://sales-management-api.herokuapp.com&#x27; : &#x27;http://localhost:3000&#x27;,
   port: process.env.PORT || 3000,
   jwtSecret: process.env.JWT_SECRET,
+  redisUri: process.env.REDIS_URI || &#x27;redis://localhost:6379&#x27;,
   database: {
     type: &#x27;postgres&#x27;,
     url: process.env.DATABASE_URL,
@@ -231,30 +229,6 @@
     dropSchema: process.env.NODE_ENV !&#x3D;&#x3D; &#x27;production&#x27;,
   },
 })</code>
-                        </td>
-                    </tr>
-
-
-            </tbody>
-        </table>
-</section>
-    <h3>src/modules/animals/animals.resolver.ts</h3>
-    <section>
-    <h3></h3>        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="pubSub"></a>
-                        <span class="name">
-                            <b>
-                            pubSub</b>
-                            <a href="#pubSub"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <i>Default value : </i><code>new PubSub()</code>
                         </td>
                     </tr>
 

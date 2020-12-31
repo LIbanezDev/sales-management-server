@@ -77,11 +77,6 @@
                             <li>
                                     <span class="modifier">Public</span>
                                     <span class="modifier">Readonly</span>
-                                <a href="#configService">configService</a>
-                            </li>
-                            <li>
-                                    <span class="modifier">Public</span>
-                                    <span class="modifier">Readonly</span>
                                 <a href="#productsRepo">productsRepo</a>
                             </li>
                             <li>
@@ -93,6 +88,25 @@
                     </td>
                 </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#getCache">getCache</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#setCache">setCache</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
 
 
 
@@ -108,7 +122,7 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(productsRepo: <a href="../classes/Product.html">Repository<Product></a>, usersRepo: <a href="../classes/User.html">Repository<User></a>, configService: ConfigService)</code>
+<code>constructor(productsRepo: <a href="../classes/Product.html">Repository<Product></a>, usersRepo: <a href="../classes/User.html">Repository<User></a>, cache: Cache)</code>
                     </td>
                 </tr>
                         <tr>
@@ -155,10 +169,10 @@
                                                     
                                                 </tr>
                                                 <tr>
-                                                        <td>configService</td>
+                                                        <td>cache</td>
                                                   
                                                         <td>
-                                                                    <code>ConfigService</code>
+                                                                    <code>Cache</code>
                                                         </td>
                                                   
                                                     <td>
@@ -175,41 +189,185 @@
         </table>
 </section>
 
+            <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getCache"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Async</span>
+                            getCache
+                        </b>
+                        <a href="#getCache"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getCache(key: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
 
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="15"
+                            class="link-to-prism">src/modules/products/products.service.ts:15</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>key</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;string&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setCache"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Async</span>
+                            setCache
+                        </b>
+                        <a href="#setCache"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>setCache(key: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, value: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, ttl: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="22"
+                            class="link-to-prism">src/modules/products/products.service.ts:22</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>key</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>value</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>ttl</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;boolean&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
             <section>
     
         <h3 id="inputs">
             Properties
         </h3>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="configService"></a>
-                        <span class="name">
-                            <b>
-                                <span class="modifier">Public</span>
-                                <span class="modifier">Readonly</span>
-                            configService</b>
-                            <a href="#configService"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <i>Type : </i>    <code>ConfigService</code>
-
-                        </td>
-                    </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/modules/products/products.service.ts:13</a></div>
-                            </td>
-                        </tr>
-
-
-            </tbody>
-        </table>
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -292,20 +450,35 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@nestjs/common&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { CACHE_MANAGER, Inject, Injectable } from &#x27;@nestjs/common&#x27;;
 import { InjectRepository } from &#x27;@nestjs/typeorm&#x27;;
 import { Product } from &#x27;../../db/models/product.entity&#x27;;
 import { Repository } from &#x27;typeorm&#x27;;
 import { User } from &#x27;../../db/models/user.entity&#x27;;
-import { ConfigService } from &#x27;@nestjs/config&#x27;;
+import { Cache } from &#x27;cache-manager&#x27;;
 
 @Injectable()
 export class ProductsService {
   constructor(
     @InjectRepository(Product) public readonly productsRepo: Repository&lt;Product&gt;,
     @InjectRepository(User) public readonly usersRepo: Repository&lt;User&gt;,
-    public readonly configService: ConfigService,
+    @Inject(CACHE_MANAGER) private readonly cache: Cache,
   ) {}
+  async getCache(key: string): Promise&lt;string&gt; {
+    try {
+      return this.cache.get(&#x27;test&#x27;);
+    } catch (e: unknown) {
+      return &#x27;No existe la key&#x27; + key;
+    }
+  }
+  async setCache(key: string, value: string, ttl: number): Promise&lt;boolean&gt; {
+    try {
+      await this.cache.set(key, value, { ttl });
+      return true;
+    } catch (e: unknown) {
+      return false;
+    }
+  }
 }
 </code></pre>
     </div>

@@ -95,7 +95,15 @@
                                 <a href="#findOne">findOne</a>
                             </li>
                             <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#microservice">microservice</a>
+                            </li>
+                            <li>
                                 <a href="#removeAnimal">removeAnimal</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#sendMicro">sendMicro</a>
                             </li>
                             <li>
                                 <a href="#updateAnimal">updateAnimal</a>
@@ -118,12 +126,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(animalsService: <a href="../injectables/AnimalsService.html">AnimalsService</a>)</code>
+<code>constructor(animalsService: <a href="../injectables/AnimalsService.html">AnimalsService</a>, pubSub: PubSub)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">src/modules/animals/animals.resolver.ts:11</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="10" class="link-to-prism">src/modules/animals/animals.resolver.ts:10</a></div>
                             </td>
                         </tr>
 
@@ -145,6 +153,18 @@
                                                   
                                                         <td>
                                                                         <code><a href="../injectables/AnimalsService.html" target="_self" >AnimalsService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>pubSub</td>
+                                                  
+                                                        <td>
+                                                                    <code>PubSub</code>
                                                         </td>
                                                   
                                                     <td>
@@ -196,8 +216,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="57"
-                            class="link-to-prism">src/modules/animals/animals.resolver.ts:57</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="54"
+                            class="link-to-prism">src/modules/animals/animals.resolver.ts:54</a></div>
                 </td>
             </tr>
 
@@ -244,8 +264,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="15"
-                            class="link-to-prism">src/modules/animals/animals.resolver.ts:15</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="14"
+                            class="link-to-prism">src/modules/animals/animals.resolver.ts:14</a></div>
                 </td>
             </tr>
 
@@ -323,8 +343,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="27"
-                            class="link-to-prism">src/modules/animals/animals.resolver.ts:27</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="26"
+                            class="link-to-prism">src/modules/animals/animals.resolver.ts:26</a></div>
                 </td>
             </tr>
 
@@ -369,8 +389,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="36"
-                            class="link-to-prism">src/modules/animals/animals.resolver.ts:36</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="35"
+                            class="link-to-prism">src/modules/animals/animals.resolver.ts:35</a></div>
                 </td>
             </tr>
 
@@ -412,6 +432,54 @@
                     </div>
                     <div class="io-description">
                         
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="microservice"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Async</span>
+                            microservice
+                        </b>
+                        <a href="#microservice"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>microservice()</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Subscription(undefined, {resolve: undefined})<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="73"
+                            class="link-to-prism">src/modules/animals/animals.resolver.ts:73</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>{}</code>
+
                     </div>
                 </td>
             </tr>
@@ -446,8 +514,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="46"
-                            class="link-to-prism">src/modules/animals/animals.resolver.ts:46</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="45"
+                            class="link-to-prism">src/modules/animals/animals.resolver.ts:45</a></div>
                 </td>
             </tr>
 
@@ -498,6 +566,54 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="sendMicro"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Async</span>
+                            sendMicro
+                        </b>
+                        <a href="#sendMicro"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>sendMicro()</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Query(undefined)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="59"
+                            class="link-to-prism">src/modules/animals/animals.resolver.ts:59</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>{}</code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="updateAnimal"></a>
                     <span class="name">
                         <b>
@@ -523,8 +639,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="41"
-                            class="link-to-prism">src/modules/animals/animals.resolver.ts:41</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="40"
+                            class="link-to-prism">src/modules/animals/animals.resolver.ts:40</a></div>
                 </td>
             </tr>
 
@@ -587,12 +703,11 @@ import { Animal } from &#x27;../../db/models/animal.entity&#x27;;
 import { CreateAnimalInput } from &#x27;./dto/create-animal.input&#x27;;
 import { UpdateAnimalInput } from &#x27;./dto/update-animal.input&#x27;;
 import { PubSub } from &#x27;apollo-server-express&#x27;;
-
-const pubSub &#x3D; new PubSub();
+import { Inject } from &#x27;@nestjs/common&#x27;;
 
 @Resolver(() &#x3D;&gt; Animal)
 export class AnimalsResolver {
-  constructor(private readonly animalsService: AnimalsService) {}
+  constructor(private readonly animalsService: AnimalsService, @Inject(&#x27;PUB_SUB&#x27;) private pubSub: PubSub) {}
 
   @Mutation(() &#x3D;&gt; Animal, { nullable: true })
   async createAnimal(@Args() createAnimal: CreateAnimalInput) {
@@ -611,7 +726,7 @@ export class AnimalsResolver {
     const animals &#x3D; await this.animalsService.animalRepo.find({
       relations: [&#x27;owner&#x27;],
     });
-    await pubSub.publish(&#x27;animals&#x27;, animals);
+    await this.pubSub.publish(&#x27;animals&#x27;, animals);
     return animals;
   }
 
@@ -633,12 +748,29 @@ export class AnimalsResolver {
   }
 
   @Subscription(() &#x3D;&gt; [Animal], {
+    resolve: payload &#x3D;&gt; payload,
+  })
+  animalAdded() {
+    return this.pubSub.asyncIterator(&#x27;animals&#x27;);
+  }
+
+  @Query(() &#x3D;&gt; Boolean)
+  async sendMicro() {
+    await this.pubSub.publish(&#x27;saludando&#x27;, &#x27;try_fast&#x27;);
+    return true;
+  }
+
+  @Subscription(() &#x3D;&gt; String, {
     resolve: payload &#x3D;&gt; {
+      if (payload.pattern) {
+        // Si es un evento enviado desde un Client proxy de @nest/microservices
+        return payload.data;
+      }
       return payload;
     },
   })
-  animalAdded() {
-    return pubSub.asyncIterator(&#x27;animals&#x27;);
+  async microservice() {
+    return this.pubSub.asyncIterator(&#x27;saludando&#x27;);
   }
 }
 </code></pre>

@@ -34,7 +34,7 @@
 
 <ol class="breadcrumb">
     <li>Modules</li>
-    <li>ProductsModule</li>
+    <li>MicroModule</li>
 </ol>
 
 <div class="text-center module-graph-container">
@@ -62,28 +62,28 @@
 <polygon fill="#fb8072" stroke="transparent" points="406,-10 406,-30 426,-30 426,-10 406,-10"/>
 <text text-anchor="start" x="429.73" y="-15.4" font-family="sans-serif" font-size="14.00"> &#160;Exports</text>
 <g id="clust1" class="cluster">
-<title>cluster_ProductsModule</title>
-<polygon fill="none" stroke="black" stroke-dasharray="1,5" points="158,-70 158,-195 338,-195 338,-70 158,-70"/>
+<title>cluster_MicroModule</title>
+<polygon fill="none" stroke="black" stroke-dasharray="1,5" points="168,-70 168,-195 328,-195 328,-70 168,-70"/>
 </g>
 <g id="clust6" class="cluster">
-<title>cluster_ProductsModule_providers</title>
-<polygon fill="none" stroke="black" points="166,-78 166,-130 330,-130 330,-78 166,-78"/>
+<title>cluster_MicroModule_providers</title>
+<polygon fill="none" stroke="black" points="176,-78 176,-130 320,-130 320,-78 176,-78"/>
 </g>
-<!-- ProductsService -->
+<!-- MicroService -->
 <g id="node1" class="node">
-<title>ProductsService</title>
-<ellipse fill="#fdb462" stroke="black" cx="248" cy="-104" rx="73.57" ry="18"/>
-<text text-anchor="middle" x="248" y="-99.8" font-family="Times,serif" font-size="14.00">ProductsService</text>
+<title>MicroService</title>
+<ellipse fill="#fdb462" stroke="black" cx="248" cy="-104" rx="63.68" ry="18"/>
+<text text-anchor="middle" x="248" y="-99.8" font-family="Times,serif" font-size="14.00">MicroService</text>
 </g>
-<!-- ProductsModule -->
+<!-- MicroModule -->
 <g id="node2" class="node">
-<title>ProductsModule</title>
-<polygon fill="#8dd3c7" stroke="black" points="302.04,-187 299.04,-191 278.04,-191 275.04,-187 193.96,-187 193.96,-151 302.04,-151 302.04,-187"/>
-<text text-anchor="middle" x="248" y="-164.8" font-family="Times,serif" font-size="14.00">ProductsModule</text>
+<title>MicroModule</title>
+<polygon fill="#8dd3c7" stroke="black" points="294.76,-187 291.76,-191 270.76,-191 267.76,-187 201.24,-187 201.24,-151 294.76,-151 294.76,-187"/>
+<text text-anchor="middle" x="248" y="-164.8" font-family="Times,serif" font-size="14.00">MicroModule</text>
 </g>
-<!-- ProductsService&#45;&gt;ProductsModule -->
+<!-- MicroService&#45;&gt;MicroModule -->
 <g id="edge1" class="edge">
-<title>ProductsService&#45;&gt;ProductsModule</title>
+<title>MicroService&#45;&gt;MicroModule</title>
 <path fill="none" stroke="black" d="M248,-122.11C248,-122.11 248,-140.99 248,-140.99"/>
 <polygon fill="black" stroke="black" points="244.5,-140.99 248,-150.99 251.5,-140.99 244.5,-140.99"/>
 </g>
@@ -117,7 +117,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/modules/products/products.module.ts</code>
+            <code>src/modules/micro/micro.module.ts</code>
         </p>
 
 
@@ -130,7 +130,7 @@
                             title="Official documentation about module providers"><span class="icon ion-ios-information-circle-outline"></a></h3>
                     <ul class="list-group">
                         <li class="list-group-item">
-                            <a href="../injectables/ProductsService.html">ProductsService</a>
+                            <a href="../injectables/MicroService.html">MicroService</a>
                         </li>
                     </ul>
                 </div>
@@ -139,7 +139,7 @@
                                 class="icon ion-ios-information-circle-outline"></a></h3>
                     <ul class="list-group">
                         <li class="list-group-item">
-                            <a href="../controllers/ProductsController.html">ProductsController</a>
+                            <a href="../controllers/MicroController.html">MicroController</a>
                         </li>
                     </ul>
                 </div>
@@ -151,26 +151,27 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { CacheModule, Module } from &#x27;@nestjs/common&#x27;;
-import { TypeOrmModule } from &#x27;@nestjs/typeorm&#x27;;
-import { ProductsService } from &#x27;./products.service&#x27;;
-import { ProductsController } from &#x27;./products.controller&#x27;;
-import { Product } from &#x27;../../db/models/product.entity&#x27;;
-import { User } from &#x27;../../db/models/user.entity&#x27;;
-import * as redisStore from &#x27;cache-manager-redis-store&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Module } from &#x27;@nestjs/common&#x27;;
+import { ClientsModule, Transport } from &#x27;@nestjs/microservices&#x27;;
+import { MicroController } from &#x27;./micro.controller&#x27;;
+import { MicroService } from &#x27;./micro.service&#x27;;
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Product, User]),
-    CacheModule.register({
-      store: redisStore,
-      url: process.env.REDIS_URI || &#x27;redis://localhost:6379&#x27;,
-    }),
+    ClientsModule.register([
+      {
+        name: &#x27;HELLO_SERVICE&#x27;,
+        transport: Transport.REDIS,
+        options: {
+          url: process.env.REDIS_URI || &#x27;redis://localhost:6379&#x27;,
+        },
+      },
+    ]),
   ],
-  providers: [ProductsService],
-  controllers: [ProductsController],
+  controllers: [MicroController],
+  providers: [MicroService],
 })
-export class ProductsModule {}
+export class MicroModule {}
 </code></pre>
     </div>
 </div>
@@ -206,7 +207,7 @@ export class ProductsModule {}
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'module';
-            var COMPODOC_CURRENT_PAGE_URL = 'ProductsModule.html';
+            var COMPODOC_CURRENT_PAGE_URL = 'MicroModule.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
 

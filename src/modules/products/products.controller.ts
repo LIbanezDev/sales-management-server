@@ -32,6 +32,16 @@ export class ProductsController {
     });
   }
 
+  @Get('/getcache')
+  getCache(@Param() key: string) {
+    return this.productsService.getCache(key);
+  }
+
+  @Post('setcache')
+  setCache(@Body() key: string, value: string) {
+    return this.productsService.setCache(key, value, 10000);
+  }
+
   @Get('/products/:id')
   async findOne(@Param('id', ParseIntPipe) id: number) {
     const product = await this.productsService.productsRepo.findOne(id);

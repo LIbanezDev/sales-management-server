@@ -6,7 +6,6 @@ import { User } from '../../db/models/user.entity';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './strategies/jwt.strategy';
-import { ConfigModule } from '@nestjs/config';
 import { JWTConfig } from '../../config/services.config';
 
 @Module({
@@ -14,7 +13,6 @@ import { JWTConfig } from '../../config/services.config';
     TypeOrmModule.forFeature([User]),
     PassportModule,
     JwtModule.registerAsync({
-      imports: [ConfigModule],
       useClass: JWTConfig,
     }),
   ],

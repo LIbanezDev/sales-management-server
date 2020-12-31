@@ -148,10 +148,23 @@ import { AnimalsResolver } from &#x27;./animals.resolver&#x27;;
 import { TypeOrmModule } from &#x27;@nestjs/typeorm&#x27;;
 import { Animal } from &#x27;../../db/models/animal.entity&#x27;;
 import { User } from &#x27;../../db/models/user.entity&#x27;;
+import { RedisPubSub } from &#x27;graphql-redis-subscriptions&#x27;;
+import * as Redis from &#x27;ioredis&#x27;;
 
 @Module({
   imports: [TypeOrmModule.forFeature([Animal, User])],
-  providers: [AnimalsResolver, AnimalsService],
+  providers: [
+    AnimalsResolver,
+    AnimalsService,
+    {
+      provide: &#x27;PUB_SUB&#x27;,
+      useFactory: () &#x3D;&gt;
+        new RedisPubSub({
+          publisher: new Redis(process.env.REDIS_URI || &#x27;redis://localhost:6379&#x27;),
+          subscriber: new Redis(process.env.REDIS_URI || &#x27;redis://localhost:6379&#x27;),
+        }),
+    },
+  ],
 })
 export class AnimalsModule {}
 </code></pre>

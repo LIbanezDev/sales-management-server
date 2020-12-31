@@ -4,12 +4,11 @@ import { Animal } from '../../db/models/animal.entity';
 import { CreateAnimalInput } from './dto/create-animal.input';
 import { UpdateAnimalInput } from './dto/update-animal.input';
 import { PubSub } from 'apollo-server-express';
-
-const pubSub = new PubSub();
+import { Inject } from '@nestjs/common';
 
 @Resolver(() => Animal)
 export class AnimalsResolver {
-  constructor(private readonly animalsService: AnimalsService) {}
+  constructor(private readonly animalsService: AnimalsService, @Inject('PUB_SUB') private pubSub: PubSub) {}
 
   @Mutation(() => Animal, { nullable: true })
   async createAnimal(@Args() createAnimal: CreateAnimalInput) {
@@ -28,7 +27,7 @@ export class AnimalsResolver {
     const animals = await this.animalsService.animalRepo.find({
       relations: ['owner'],
     });
-    await pubSub.publish('animals', animals);
+    await this.pubSub.publish('animals', animals);
     return animals;
   }
 
@@ -50,11 +49,28 @@ export class AnimalsResolver {
   }
 
   @Subscription(() => [Animal], {
+    resolve: payload => payload,
+  })
+  animalAdded() {
+    return this.pubSub.asyncIterator('animals');
+  }
+
+  @Query(() => Boolean)
+  async sendMicro() {
+    await this.pubSub.publish('saludando', 'try_fast');
+    return true;
+  }
+
+  @Subscription(() => String, {
     resolve: payload => {
+      if (payload.pattern) {
+        // Si es un evento enviado desde un Client proxy de @nest/microservices
+        return payload.data;
+      }
       return payload;
     },
   })
-  animalAdded() {
-    return pubSub.asyncIterator('animals');
+  async microservice() {
+    return this.pubSub.asyncIterator('saludando');
   }
 }
