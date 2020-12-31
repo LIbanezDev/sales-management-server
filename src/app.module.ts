@@ -20,6 +20,7 @@ import { AnimalsModule, AuthModule, ProductsModule, UsersModule, HealthModule } 
     GraphQLModule.forRoot(apolloConfig),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'documentation'),
+      exclude: ['/api*', '/graphql'],
     }),
     ConfigModule.forRoot({
       isGlobal: true,
